@@ -225,6 +225,7 @@ type
     nkBreakState,         # special break statement for easier code generation
     nkFuncDef,            # a func
     nkTupleConstr         # a tuple constructor
+    nkFuncTy              # func type
 
   TNodeKinds* = set[TNodeKind]
 
@@ -437,6 +438,9 @@ type
 
     tyVoid
       # now different from tyEmpty, hurray!
+
+    tyFunc
+      # A type representing func
 
 static:
   # remind us when TTypeKind stops to fit in a single 64-bit word

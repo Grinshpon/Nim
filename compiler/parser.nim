@@ -1131,11 +1131,14 @@ proc parseProcExpr(p: var TParser; isExpr: bool; kind: TNodeKind): PNode =
       params = params, name = p.emptyNode, pattern = p.emptyNode,
       genericParams = p.emptyNode, pragmas = pragmas, exceptions = p.emptyNode)
   else:
-    result = newNodeI(nkProcTy, info)
+    if kind == nkFuncDef:
+      result = newNodeI(nkFuncTy, info)
+    else:
+      result = newNodeI(nkProcTy, info)
     if hasSignature:
       result.add(params)
-      if kind == nkFuncDef:
-        parMessage(p, "func keyword is not allowed in type descriptions, use proc with {.noSideEffect.} pragma instead")
+      #if kind == nkFuncDef:
+      #  parMessage(p, "func keyword is not allowed in type descriptions, use proc with {.noSideEffect.} pragma instead")
       result.add(pragmas)
 
 proc isExprStart(p: TParser): bool =
